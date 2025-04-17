@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>169 Translator</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 2rem;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #121212;
+      background-image: url('final_assets/16_9_visual_watermark_tiled.png');
+      background-repeat: repeat;
+      background-size: 300px;
+      color: white;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 2rem;
+      background-color: rgba(0, 0, 0, 0.6);
+      border-radius: 16px;
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+    }
+    h1 {
+      color: #ff4444;
+      font-size: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .flag {
+      font-size: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1><span id="langFlag">🌐</span> <span id="langLabel">Translated Message</span></h1>
+    <div id="translatedText"></div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const text = decodeURIComponent(params.get("text") || "").replace(/\+/g, " ");
+    const lang = (params.get("lang") || "en").toLowerCase();
+
+    const flags = {
+      "en": "🇬🇧",
+      "it": "🇮🇹",
+      "es": "🇪🇸",
+      "fr": "🇫🇷",
+      "de": "🇩🇪",
+      "pt": "🇵🇹",
+      "jp": "🇯🇵",
+      "cn": "🇨🇳"
+    };
+
+    const titles = {
+      "en": "English Translation",
+      "it": "Traduzione in Italiano",
+      "es": "Traducción en Español",
+      "fr": "Traduction Française",
+      "de": "Deutsche Übersetzung",
+      "pt": "Tradução em Português",
+      "jp": "日本語訳",
+      "cn": "中文翻译"
+    };
+
+    document.getElementById("translatedText").textContent = text;
+    document.getElementById("langFlag").textContent = flags[lang] || "🌐";
+    document.getElementById("langLabel").textContent = titles[lang] || "Translated Message";
+  </script>
+</body>
+</html>
