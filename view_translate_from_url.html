@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Traduzione</title>
+  <style>
+    body {
+      background: #fff;
+      color: #111;
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+    #result {
+      font-size: 24px;
+      text-align: center;
+      max-width: 800px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <div id="result">Traducendo...</div>
+
+  <script>
+    function getParam(name) {
+      const url = new URL(window.location.href);
+      return url.searchParams.get(name);
+    }
+
+    async function translate() {
+      const text = getParam("text");
+      const targetLang = getParam("lang") || "en";
+
+      if (!text) {
+        document.getElementById("result").innerText = "⚠️ Nessun testo da tradurre.";
+        return;
+      }
+
+      const response = await fetch("https://translate.argosopentech.com/translate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          q: text,
+          source: "auto",
+          target: targetLang,
+          format: "text"
+        })
+      });
+
+      const data = await response.json();
+      document.getElementById("result").innerText = data.translatedText || "Errore nella traduzione.";
+    }
+
+    translate();
+  </script>
+</body>
+</html>
